@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vantage Assets | Premium Wealth Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #020617; color: #f8fafc; }
+        .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .sidebar-item.active { background: #1e293b; border-left: 4px solid #3b82f6; color: #3b82f6; }
+        .chart-bar { transition: height 1s ease-in-out; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+<!-- LOGIN PAGE -->
+<div id="login-page" class="min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-md w-full glass p-10 rounded-3xl shadow-2xl">
+        <div class="text-center mb-10">
+            <div class="inline-flex p-3 rounded-2xl bg-blue-600 mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                </svg>
+            </div>
+            <h1 class="text-3xl font-bold tracking-tight">VANTAGE ASSETS</h1>
+            <p class="text-slate-400 mt-2">Global Wealth Management Portal</p>
+        </div>
+        <form onsubmit="handleLogin(event)" class="space-y-6">
+            <div>
+                <label class="block text-sm font-medium text-slate-400 mb-2">Institutional Email</label>
+                <input type="email" id="login-email" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500 transition-all" placeholder="investor@vantageassets.com">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-slate-400 mb-2">Security Key</label>
+                <input type="password" id="login-pass" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500 transition-all" placeholder="••••••••">
+            </div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-900/20 transition-all">
+                Access Portfolio
+            </button>
+        </form>
+        <p class="text-center text-slate-500 text-[10px] mt-8 uppercase tracking-[0.2em]">Tier-4 Data Encryption Protocol</p>
+    </div>
+</div>
+
+<!-- MAIN APPLICATION LAYOUT -->
+<div id="app-layout" class="hidden min-h-screen flex flex-col md:flex-row">
+    <!-- Sidebar -->
+    <aside class="w-full md:w-72 glass border-r border-white/5 flex flex-col">
+        <div class="p-8">
+            <div class="flex items-center gap-3">
+                <div class="bg-blue-600 p-2 rounded-lg">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+                </div>
+                <span class="text-xl font-bold tracking-tighter uppercase">VANTAGE</span>
+            </div>
+        </div>
+
+        <nav class="flex-1 px-4 space-y-2">
+            <button onclick="showTab('dashboard')" class="sidebar-item active w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                Overview
+            </button>
+            <button onclick="showTab('invest')" class="sidebar-item w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all text-slate-400 hover:bg-slate-800">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Investment Tiers
+            </button>
+            <button onclick="showTab('portfolio')" class="sidebar-item w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all text-slate-400 hover:bg-slate-800">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                My Portfolio
+            </button>
+            <button onclick="showTab('history')" class="sidebar-item w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all text-slate-400 hover:bg-slate-800">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Transactions
+            </button>
+        </nav>
+
+        <div class="p-6">
+            <button onclick="logout()" class="w-full flex items-center justify-center gap-2 p-3 text-red-400 hover:bg-red-500/10 rounded-xl transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                Secure Exit
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto p-4 md:p-10">
+        <!-- Header -->
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10">
+            <div>
+                <h2 id="welcome-text" class="text-3xl font-bold">Welcome Back, Investor</h2>
+                <p class="text-slate-400">Manage your Vantage institutional assets.</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="text-right">
+                    <p class="text-xs text-slate-500 uppercase font-bold tracking-wider">Net Liquidity</p>
+                    <p id="wallet-balance" class="text-2xl font-bold text-emerald-400">$0.00</p>
+                </div>
+                <button onclick="openDeposit()" class="bg-blue-600 hover:bg-blue-500 px-6 py-3 rounded-xl font-bold transition-all shadow-lg shadow-blue-900/40">Fund Account</button>
+            </div>
+        </header>
+
+        <!-- DASHBOARD TAB -->
+        <section id="dashboard" class="tab-content active">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                <div class="glass p-8 rounded-3xl">
+                    <p class="text-slate-400 text-sm mb-1 uppercase tracking-tight font-semibold">Allocated Assets</p>
+                    <h3 id="stat-invested" class="text-3xl font-bold">$0.00</h3>
+                    <div class="mt-4 text-xs text-emerald-400 flex items-center gap-1">
+                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"/></svg>
+                        Performance +5.4%
+                    </div>
+                </div>
+                <div class="glass p-8 rounded-3xl">
+                    <p class="text-slate-400 text-sm mb-1 uppercase tracking-tight font-semibold">Total Dividends</p>
+                    <h3 id="stat-profits" class="text-3xl font-bold text-emerald-400">$0.00</h3>
+                    <p class="mt-4 text-xs text-slate-500">Unrealized profit projection</p>
+                </div>
+                <div class="glass p-8 rounded-3xl">
+                    <p class="text-slate-400 text-sm mb-1 uppercase tracking-tight font-semibold">Position Count</p>
+                    <h3 id="stat-plans" class="text-3xl font-bold">0</h3>
+                    <p class="mt-4 text-xs text-slate-500">Diversified positions</p>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-bold mb-6">Portfolio Growth Analysis</h3>
+            <div class="glass p-8 rounded-3xl h-64 flex items-end justify-between gap-2">
+                <div class="chart-bar bg-blue-600 w-full rounded-t-lg" style="height: 40%"></div>
+                <div class="chart-bar bg-blue-500 w-full rounded-t-lg" style="height: 65%"></div>
+                <div class="chart-bar bg-blue-400 w-full rounded-t-lg" style="height: 45%"></div>
+                <div class="chart-bar bg-blue-600 w-full rounded-t-lg" style="height: 80%"></div>
+                <div class="chart-bar bg-blue-500 w-full rounded-t-lg" style="height: 30%"></div>
+                <div class="chart-bar bg-blue-400 w-full rounded-t-lg" style="height: 90%"></div>
+                <div class="chart-bar bg-blue-600 w-full rounded-t-lg" style="height: 55%"></div>
+            </div>
+        </section>
+
+        <!-- INVEST PLANS TAB -->
+        <section id="invest" class="tab-content">
+            <h3 class="text-2xl font-bold mb-8">Institutional Investment Tiers</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Plan 1 -->
+                <div class="glass p-8 rounded-3xl border-t-4 border-blue-500 relative flex flex-col">
+                    <h4 class="text-xl font-bold mb-2">Alpha Yield</h4>
+                    <p class="text-3xl font-black mb-6">10% <span class="text-sm font-normal text-slate-400">Monthly Return</span></p>
+                    <ul class="space-y-3 mb-8 flex-1">
+                        <li class="flex items-center gap-2 text-sm text-slate-300"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="3" d="M5 13l4 4L19 7"/></svg> Threshold: $250</li>
+                        <li class="flex items-center gap-2 text-sm text-slate-300"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="3" d="M5 13l4 4L19 7"/></svg> Period: 30 Trading Days</li>
+                        <li class="flex items-center gap-2 text-sm text-slate-300"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="3" d="M5 13l4 4L19 7"/></svg> Auto-reinvest Option</li>
+                    </ul>
+                    <button onclick="buyPlan('Alpha Yield', 250, 0.10)" class="w-full py-4 bg-blue-600 hover:bg-blue-500 rounded-xl font-bold transition-all">Allocate Funds</button>
+                </div>
+                <!-- Plan 2 -->
+                <div class="glass p-8 rounded-3xl border-t-4 border-purple-500 flex flex-col">
+                    <h4 class="text-xl font-bold mb-2">Global Prime</h4>
+                    <p class="text-3xl font-black mb-6">18% <span class="text-sm font-normal text-slate-400">Monthly Return</span></p>
+                    <ul class="space-y-3 mb-8 flex-1">
+                        <li class="flex items-center gap-2 text-sm text-slate-300"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="3" d="M5 13l4 4L19 7"/></svg> Threshold: $2,500</li>
+                        <li class="flex items-center gap-2 text-sm text-slate-300"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="3" d="M5 13l4 4L19 7"/></svg> Period: 60 Trading Days</li>
+                        <li class="flex items-center gap-2 text-sm text-slate-300"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="3" d="M5 13l4 4L19 7"/></svg> Priority Desk Access</li>
+                    </ul>
+                    <button onclick="buyPlan('Global Prime', 2500, 0.18)" class="w-full py-4 bg-purple-600 hover:bg-purple-500 rounded-xl font-bold transition-all">Allocate Funds</button>
+                </div>
+                <!-- Plan 3 -->
+                <div class="glass p-8 rounded-3xl border-t-4 border-amber-500 flex flex-col">
+                    <h4 class="text-xl font-bold mb-2">Vantage Elite</h4>
+                    <p class="text-3xl font-black mb-6">28% <span class="text-sm font-normal text-slate-400">Monthly Return</span></p>
+                    <ul class="space-y-3 mb-8 flex-1">
+                        <li class="flex items-center gap-2 text-sm text-slate-300"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="3" d="M5 13l4 4L19 7"/></svg> Threshold: $15,000</li>
+                        <li class="flex items-center gap-2 text-sm text-slate-300"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="3" d="M5 13l4 4L19 7"/></svg> Period: 120 Trading Days</li>
+                        <li class="flex items-center gap-2 text-sm text-slate-300"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="3" d="M5 13l4 4L19 7"/></svg> Private Asset Manager</li>
+                    </ul>
+                    <button onclick="buyPlan('Vantage Elite', 15000, 0.28)" class="w-full py-4 bg-amber-600 hover:bg-amber-500 rounded-xl font-bold transition-all">Allocate Funds</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PORTFOLIO TAB -->
+        <section id="portfolio" class="tab-content">
+            <h3 class="text-2xl font-bold mb-8">Current Positions</h3>
+            <div id="portfolio-list" class="space-y-4">
+                <!-- Dynamic Portfolio -->
+            </div>
+        </section>
+
+        <!-- HISTORY TAB -->
+        <section id="history" class="tab-content">
+            <h3 class="text-2xl font-bold mb-8">Asset History</h3>
+            <div class="glass rounded-3xl overflow-hidden">
+                <table class="w-full text-left">
+                    <thead class="bg-slate-800/50">
+                        <tr>
+                            <th class="px-6 py-4 font-semibold text-xs uppercase tracking-widest">Transaction</th>
+                            <th class="px-6 py-4 font-semibold text-xs uppercase tracking-widest">Timestamp</th>
+                            <th class="px-6 py-4 font-semibold text-xs uppercase tracking-widest">Value (USD)</th>
+                            <th class="px-6 py-4 font-semibold text-xs uppercase tracking-widest">Verification</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-table" class="divide-y divide-white/5 text-sm">
+                        <!-- History rows -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- Modal: Deposit -->
+<div id="deposit-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+    <div class="glass max-w-sm w-full p-8 rounded-3xl shadow-2xl">
+        <h3 class="text-xl font-bold mb-2 text-blue-400">Secure Inbound Transfer</h3>
+        <p class="text-sm text-slate-400 mb-6">Enter the amount to wire into your Vantage liquidity wallet.</p>
+        <div class="space-y-4">
+            <div>
+                <label class="block text-xs font-bold uppercase text-slate-500 mb-2">Transfer Amount (USD)</label>
+                <input type="number" id="deposit-amount" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 outline-none" placeholder="1000.00">
+            </div>
+            <button onclick="confirmDeposit()" class="w-full bg-blue-600 py-4 rounded-xl font-bold">Initiate Transfer</button>
+            <button onclick="closeDeposit()" class="w-full text-slate-500 text-sm">Dismiss</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // State Management
+    let state = JSON.parse(localStorage.getItem('vantageAssetsDB')) || {
+        user: { balance: 0 },
+        portfolio: [],
+        transactions: []
+    };
+
+    function save() {
+        localStorage.setItem('vantageAssetsDB', JSON.stringify(state));
+        render();
+    }
+
+    function handleLogin(e) {
+        e.preventDefault();
+        document.getElementById('login-page').style.display = 'none';
+        document.getElementById('app-layout').classList.remove('hidden');
+        render();
+    }
+
+    function logout() { location.reload(); }
+
+    function showTab(id) {
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.sidebar-item').forEach(i => {
+            i.classList.remove('active');
+            i.classList.add('text-slate-400');
+        });
+        document.getElementById(id).classList.add('active');
+        event.currentTarget.classList.add('active');
+        event.currentTarget.classList.remove('text-slate-400');
+    }
+
+    function openDeposit() { document.getElementById('deposit-modal').style.display = 'flex'; }
+    function closeDeposit() { document.getElementById('deposit-modal').style.display = 'none'; }
+
+    function confirmDeposit() {
+        const amount = parseFloat(document.getElementById('deposit-amount').value);
+        if(amount > 0) {
+            state.user.balance += amount;
+            state.transactions.unshift({
+                desc: "Inbound Wire Transfer",
+                date: new Date().toLocaleString(),
+                amount: `+$${amount.toLocaleString()}`,
+                status: "Verified",
+                type: 'plus'
+            });
+            save();
+            closeDeposit();
+            alert("Transfer Confirmed.");
+        }
+    }
+
+    function buyPlan(name, min, roi) {
+        if(state.user.balance < min) {
+            alert(`Insufficient Liquidity for ${name}. Minimum requirement: $${min}`);
+            return;
+        }
+
+        const investment = parseFloat(prompt(`Amount to allocate for ${name}:`, min));
+
+        if(investment >= min && state.user.balance >= investment) {
+            state.user.balance -= investment;
+            state.portfolio.push({
+                id: Date.now(),
+                plan: name,
+                invested: investment,
+                profit: investment * roi,
+                date: new Date().toLocaleDateString(),
+                roi: (roi * 100) + "%"
+            });
+
+            state.transactions.unshift({
+                desc: `Allocation: ${name}`,
+                date: new Date().toLocaleString(),
+                amount: `-$${investment.toLocaleString()}`,
+                status: "Pending ROI",
+                type: 'minus'
+            });
+
+            save();
+            alert(`Position opened successfully for ${name}.`);
+        }
+    }
+
+    function render() {
+        document.getElementById('wallet-balance').innerText = `$${state.user.balance.toLocaleString()}`;
+        
+        const totalInvested = state.portfolio.reduce((acc, curr) => acc + curr.invested, 0);
+        const totalProfits = state.portfolio.reduce((acc, curr) => acc + curr.profit, 0);
+        
+        document.getElementById('stat-invested').innerText = `$${totalInvested.toLocaleString()}`;
+        document.getElementById('stat-profits').innerText = `$${totalProfits.toLocaleString()}`;
+        document.getElementById('stat-plans').innerText = state.portfolio.length;
+
+        let portHtml = "";
+        state.portfolio.forEach(item => {
+            portHtml += `
+                <div class="glass p-6 rounded-2xl flex flex-wrap justify-between items-center gap-4">
+                    <div>
+                        <h5 class="font-bold text-lg text-blue-400">${item.plan} Position</h5>
+                        <p class="text-xs text-slate-500">Initiated ${item.date}</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-xs text-slate-500 uppercase font-bold">Invested Principal</p>
+                        <p class="font-bold">$${item.invested.toLocaleString()}</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs text-slate-500 uppercase font-bold text-emerald-400">Projected Yield</p>
+                        <p class="font-bold text-emerald-400">+$${item.profit.toLocaleString()}</p>
+                    </div>
+                </div>`;
+        });
+        document.getElementById('portfolio-list').innerHTML = portHtml || '<p class="text-center text-slate-500 py-10">No active positions found.</p>';
+
+        let histHtml = "";
+        state.transactions.forEach(t => {
+            histHtml += `
+                <tr class="hover:bg-white/[0.02]">
+                    <td class="px-6 py-4 font-medium">${t.desc}</td>
+                    <td class="px-6 py-4 text-slate-500 text-xs">${t.date}</td>
+                    <td class="px-6 py-4 font-bold ${t.type === 'plus' ? 'text-emerald-400' : 'text-slate-200'}">${t.amount}</td>
+                    <td class="px-6 py-4"><span class="px-2 py-1 bg-white/5 text-[10px] font-bold rounded uppercase tracking-tighter">${t.status}</span></td>
+                </tr>`;
+        });
+        document.getElementById('history-table').innerHTML = histHtml || '<tr><td colspan="4" class="text-center p-6 text-slate-500">Log is empty.</td></tr>';
+    }
+
+    window.onload = render;
+</script>
+
+</body>
+</html>
