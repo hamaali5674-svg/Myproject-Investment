@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vantage Assets | Premium Wealth Management</title>
+    <title>Invenstment Spot | Premium Wealth Management</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -27,13 +27,13 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                 </svg>
             </div>
-            <h1 class="text-3xl font-bold tracking-tight">VANTAGE ASSETS</h1>
+            <h1 class="text-3xl font-bold tracking-tight">Investment Spot</h1>
             <p class="text-slate-400 mt-2">Global Wealth Management Portal</p>
         </div>
         <form onsubmit="handleLogin(event)" class="space-y-6">
             <div>
                 <label class="block text-sm font-medium text-slate-400 mb-2">Institutional Email</label>
-                <input type="email" id="login-email" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500 transition-all" placeholder="investor@vantageassets.com">
+                <input type="email" id="login-email" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500 transition-all" placeholder="investor@Investment Spot.com">
             </div>
             <div>
                 <label class="block text-sm font-medium text-slate-400 mb-2">Security Key</label>
@@ -167,14 +167,14 @@
                 </div>
                 <!-- Plan 3 -->
                 <div class="glass p-8 rounded-3xl border-t-4 border-amber-500 flex flex-col">
-                    <h4 class="text-xl font-bold mb-2">Vantage Elite</h4>
+                    <h4 class="text-xl font-bold mb-2">Investment Spot</h4>
                     <p class="text-3xl font-black mb-6">28% <span class="text-sm font-normal text-slate-400">Monthly Return</span></p>
                     <ul class="space-y-3 mb-8 flex-1">
                         <li class="flex items-center gap-2 text-sm text-slate-300"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="3" d="M5 13l4 4L19 7"/></svg> Threshold: $15,000</li>
                         <li class="flex items-center gap-2 text-sm text-slate-300"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="3" d="M5 13l4 4L19 7"/></svg> Period: 120 Trading Days</li>
                         <li class="flex items-center gap-2 text-sm text-slate-300"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="3" d="M5 13l4 4L19 7"/></svg> Private Asset Manager</li>
                     </ul>
-                    <button onclick="buyPlan('Vantage Elite', 15000, 0.28)" class="w-full py-4 bg-amber-600 hover:bg-amber-500 rounded-xl font-bold transition-all">Allocate Funds</button>
+                    <button onclick="buyPlan('Investment Spot ', 15000, 0.28)" class="w-full py-4 bg-amber-600 hover:bg-amber-500 rounded-xl font-bold transition-all">Allocate Funds</button>
                 </div>
             </div>
         </section>
@@ -213,7 +213,7 @@
 <div id="deposit-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
     <div class="glass max-w-sm w-full p-8 rounded-3xl shadow-2xl">
         <h3 class="text-xl font-bold mb-2 text-blue-400">Secure Inbound Transfer</h3>
-        <p class="text-sm text-slate-400 mb-6">Enter the amount to wire into your Vantage liquidity wallet.</p>
+        <p class="text-sm text-slate-400 mb-6">Enter the amount to wire into your Investment Spot liquidity wallet.</p>
         <div class="space-y-4">
             <div>
                 <label class="block text-xs font-bold uppercase text-slate-500 mb-2">Transfer Amount (USD)</label>
@@ -227,14 +227,14 @@
 
 <script>
     // State Management
-    let state = JSON.parse(localStorage.getItem('vantageAssetsDB')) || {
+    let state = JSON.parse(localStorage.getItem('Investment Spot')) || {
         user: { balance: 0 },
         portfolio: [],
         transactions: []
     };
 
     function save() {
-        localStorage.setItem('vantageAssetsDB', JSON.stringify(state));
+        localStorage.setItem('Investment Spot', JSON.stringify(state));
         render();
     }
 
